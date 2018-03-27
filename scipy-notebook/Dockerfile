@@ -17,30 +17,25 @@ USER $NB_UID
 # Install Python 3 packages
 # Remove pyqt and qt pulled in for matplotlib since we're only ever going to
 # use notebook-friendly backends in these images
-RUN conda install --quiet --yes \
-    'nomkl' \
+RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
+    conda install --quiet --yes \
     'ipywidgets=7.1*' \
-    'pandas=0.19*' \
-    'numexpr=2.6*' \
-    'matplotlib=2.0*' \
-    'scipy=0.19*' \
-    'seaborn=0.7*' \
-    'scikit-learn=0.18*' \
-    'scikit-image=0.12*' \
-    'sympy=1.0*' \
-    'cython=0.25*' \
-    'patsy=0.4*' \
-    'statsmodels=0.8*' \
-    'cloudpickle=0.2*' \
+    'pandas=0.22*' \
+    'matplotlib=2.2*' \
+    'graphviz=2.*'\
+    'python-graphviz=0.8*' \
+    'scipy=1.*' \
+    'xgboost=0.7*' \
+    'seaborn=0.8*' \
+    'scikit-learn=0.19*' \
+    'scikit-image=0.13*' \
+    'cython=0.28*' \
     'dill=0.2*' \
-    'numba=0.31*' \
-    'bokeh=0.12*' \
-    'sqlalchemy=1.1*' \
-    'hdf5=1.8.17' \
-    'h5py=2.6*' \
-    'vincent=0.4.*' \
-    'beautifulsoup4=4.5.*' \
-    'protobuf=3.*' \
+    'hdf5=1.10.1' \
+    'h5py=2.7*' \
+    'beautifulsoup4=4.6.*' \
+    'boto3=1.*' \
+    's3fs=0.1*' \
     'xlrd'  && \
     conda remove --quiet --yes --force qt pyqt && \
     conda clean -tipsy && \
