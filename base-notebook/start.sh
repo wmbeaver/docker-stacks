@@ -11,12 +11,30 @@ else
     cmd=$*
 fi
 
+for f in /usr/local/bin/start-notebook.d/*; do
+  case "$f" in
+    *.sh)
+      echo "$0: running $f"; . "$f"
+      ;;
+    *)
+      if [ -x $f ]; then
+        echo "$0: running $f"
+        $f
+      else
+        echo "$0: ignoring $f"
+      fi
+      ;;
+  esac
+  echo
+done
 # Handle special flags if we're root
 if [ $(id -u) == 0 ] ; then
 
-    # Handle username change. Since this is cheap, do this unconditionally
-    echo "Set username to: $NB_USER"
-    usermod -d /home/$NB_USER -l $NB_USER jovyan
+    # Only attempt to change the jovyan username if it exists
+    if id jovyan &> /dev/null ; then
+        echo "Set username to: $NB_USER"
+        usermod -d /home/$NB_USER -l $NB_USER jovyan
+    fi
 
     # Handle case where provisioned storage does not have the correct permissions by default
     # Ex: default NFS/EFS (no auto-uid/gid)

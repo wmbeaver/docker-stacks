@@ -19,6 +19,7 @@ USER $NB_UID
 # use notebook-friendly backends in these images
 RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
     conda install --quiet --yes \
+    'blas=*=openblas' \
     'ipywidgets=7.1*' \
     'pandas=0.22*' \
     'matplotlib=2.2*' \
