@@ -20,7 +20,7 @@ USER $NB_UID
 RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
     conda install --quiet --yes \
     'blas=*=openblas' \
-    'ipywidgets=7.1*' \
+    'ipywidgets=7.2*' \
     'pandas=0.22*' \
     'matplotlib=2.2*' \
     'graphviz=2.*'\
@@ -32,7 +32,7 @@ RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
     'scikit-image=0.13*' \
     'cython=0.28*' \
     'dill=0.2*' \
-    'hdf5=1.10.1' \
+    'hdf5=1.10*' \
     'h5py=2.7*' \
     'beautifulsoup4=4.6.*' \
     'boto3=1.*' \
@@ -43,9 +43,9 @@ RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
     # Activate ipywidgets extension in the environment that runs the notebook server
     jupyter nbextension enable --py widgetsnbextension --sys-prefix && \
     # Also activate ipywidgets extension for JupyterLab
-    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.33.1 && \
-    jupyter labextension install jupyterlab_bokeh@^0.4.0 && \
-    npm cache clean && \
+    jupyter labextension install @jupyter-widgets/jupyterlab-manager@^0.35 && \
+    jupyter labextension install jupyterlab_bokeh@^0.5.0 && \
+    npm cache clean --force && \
     rm -rf $CONDA_DIR/share/jupyter/lab/staging && \
     rm -rf /home/$NB_USER/.cache/yarn && \
     rm -rf /home/$NB_USER/.node-gyp && \
@@ -59,7 +59,8 @@ RUN cd /tmp && \
     git clone https://github.com/PAIR-code/facets.git && \
     cd facets && \
     jupyter nbextension install facets-dist/ --sys-prefix && \
-    rm -rf facets && \
+    cd && \
+    rm -rf /tmp/facets && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
 
