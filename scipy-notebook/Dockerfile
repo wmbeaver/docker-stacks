@@ -26,7 +26,7 @@ RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
     'graphviz=2.*'\
     'python-graphviz=0.8*' \
     'scipy=1.*' \
-    'xgboost=0.7*' \
+    'xgboost' \
     'seaborn=0.8*' \
     'scikit-learn=0.19*' \
     'scikit-image=0.13*' \
@@ -51,6 +51,8 @@ RUN $CONDA_DIR/bin/conda config --system --append channels anaconda && \
     rm -rf /home/$NB_USER/.node-gyp && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+RUN pip install shap
 
 # Install facets which does not have a pip or conda package at the moment
 RUN cd /tmp && \
